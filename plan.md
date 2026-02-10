@@ -2,8 +2,8 @@
 
 ## data structure
 
-    -- the card is stired as a object with its value (i.e) color,symbol and value.
-    -- and the all the 52 cards are stored in an array.
+- the card is stored as a object with its value (i.e) color,symbol and value.
+- and the all the 52 cards are stored in an array.
 
 ## structure
 
@@ -19,6 +19,24 @@
 ```
 
 # Game
+
+## game play
+
+- shuflle the deck and give 7 cards per person.
+- after distributing the cards remaning cards will place middle of the game.
+- then the game will start,
+- from the remaining deck 2 cards will be drawn one will be joker and anothe
+  will be open card.
+- the cards will display at bottom of the screen.
+- player will select the cards to drop.
+- and use the drop button to drop.
+- the drop card will be shown at left to the next player.
+- the last add card will be shown to the next player.
+- all drop cards will be stored in an array .
+- in case of the deck is empty the dropped cards will be shuffle and place as
+  the deck.
+- the show button will only active when the score of the player is less than 10.
+- when the player click on the show th eplayer with the least score will win.
 
 ## least count
 
@@ -37,15 +55,8 @@
 - **shuffle**
   - for shuffle the cards we use the jsr shuffle the cards
 
-display ui : at bottom --> cards middle --> deck , joker. left --> previous
-right --> thrown card .
-
-game play -> cards(decks) -> shuffle splice(0,7) per person -> remaing deck ->
-start game -> open card, joker. -> first player -> cards will be dipslay from
-left to right -> user will select which cards to drop the relaese button ->
-previous cards will be store in an array and the last card will be display on
-the deck -> show button if palyer want to click the show button the player score
-should be less than 10 -> after that every player score should be caluculated
-and display the winner
-
-function(value,group,color) => create card
+- **UI**
+  - the hand of cards will display at bottom of the screen
+  - the remaining deck will palce at middle of the screen
+  - previously dropped card will be shown left to the player
+  - the thrown cards of the current player will be shoen right to the player

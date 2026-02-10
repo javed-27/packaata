@@ -27,7 +27,10 @@ const play = async (connection) => {
 };
 
 const main = async () => {
-  const connection = await Deno.connect({ port: 8000 });
+  const connection = await Deno.connect({
+    "hostname": "10.132.125.26",
+    port: 8000,
+  });
   await play(connection);
 };
 
