@@ -1,3 +1,5 @@
+import { createCards, getSets } from "./src/create_cards.js";
+
 const writeToPlayer = async (player, rawData) => {
   const encoder = new TextEncoder();
   const data = JSON.stringify(rawData);
@@ -16,13 +18,6 @@ const getPlayers = async (listener, count) => {
   }
 }
 
-const getSets = (count) => {
-  const sets = [];
-  for (let counter = 0; counter < count; counter++)
-    sets.push({});
-  return sets;
-}
-
 const writeSetsToPlayer = async (sets, players) => {
   for (let index = 0; index < sets.length; index++) {
     await writeToPlayer(players[index], sets[index]);
@@ -31,10 +26,11 @@ const writeSetsToPlayer = async (sets, players) => {
 }
 
 const startGame = async (players) => {
-  const sets = getSets(players.length);
+  const cards = createCards();
+  const sets = getSets(players.length, cards);
   await writeSetsToPlayer(sets, players);
   while (true) {
-    
+
   }
 }
 
