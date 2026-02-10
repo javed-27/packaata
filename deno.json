@@ -5,6 +5,7 @@
   },
   "imports": {
     "@std/assert": "jsr:@std/assert",
+    "@std/random": "jsr:@std/random@^0.1.5",
     "@std/testing": "jsr:@std/testing/bdd",
     "@tsd/color": "jsr:@std/fmt/colors"
   }
