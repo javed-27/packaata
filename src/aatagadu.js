@@ -1,4 +1,4 @@
-import { displayCards } from "./display_cards.js";
+import { displayCards, sortCards } from "./display_cards.js";
 
 const parse = (rawData) => {
   const data = (new TextDecoder()).decode(rawData);
@@ -20,8 +20,10 @@ const readFromServer = async (connection) => {
 const play = async (connection) => {
   const msg = await readFromServer(connection);
   writeToScreen(msg);
-  const cards = await readFromServer(connection);
-  displayCards(parse(cards));
+  const data = await readFromServer(connection);
+  const cards = parse(data);
+  sortCards(cards);
+  displayCards(cards);
   while (true) {
   }
 };
