@@ -1,4 +1,4 @@
-import { createCards, getSets } from "./src/create_cards.js";
+import { createCards, getSets, shuffleCards } from "./src/create_cards.js";
 
 const writeToPlayer = async (player, rawData) => {
   const encoder = new TextEncoder();
@@ -27,7 +27,8 @@ const writeSetsToPlayer = async (sets, players) => {
 
 const startGame = async (players) => {
   const cards = createCards();
-  const sets = getSets(players.length, cards);
+  const shuffledCards = shuffleCards(cards);
+  const sets = getSets(players.length, shuffledCards);
   await writeSetsToPlayer(sets, players);
   while (true) {
 

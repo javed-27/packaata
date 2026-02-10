@@ -1,6 +1,5 @@
 import { shuffle } from "@std/random";
 
-
 export const createSet = (suit, color, values) => 
   values.map(value => ({value, suit, color}));
 
