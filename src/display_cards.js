@@ -32,12 +32,6 @@ export const displayCards = (cards) => {
   return hand;
 };
 
-export const sortCards = (cards) => {
-  const numberCards = cards.filter((card) => !isNaN(card.value)).sort((a, b) =>
-    a.value - b.value
-  );
-  const faceCards = cards.filter((card) => isNaN(card.value)).sort((a, b) =>
-    a.value.charCodeAt() - b.value.charCodeAt()
-  );
-  return [...numberCards, ...faceCards];
-};
+const getDifference = (x, y) => x.value.charCodeAt() - y.value.charCodeAt();
+
+export const sortCards = (cards) => cards.sort((a, b) => getDifference(a, b));
