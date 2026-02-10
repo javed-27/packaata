@@ -1,6 +1,5 @@
 import boxen from "npm:boxen";
-import { black } from "jsr:@std/fmt/colors";
-import { white } from "jsr:@std/internal@^1.0.12/styles";
+import { black } from "@tsd/color";
 
 const symbol = {
   spade: "♠️",
@@ -10,10 +9,15 @@ const symbol = {
 };
 
 const formatCard = ({ color, suit, value }) => {
-  const format = `${black(value)}       ${(symbol[suit])}
+  const format = `${value}       ${(symbol[suit])}
   \n\n\n\n
-${symbol[suit]}       ${black(value)}`;
-  const cards = boxen(format, { backgroundColor: "white" });
+${symbol[suit]}       ${value}`;
+
+  const cards = boxen(format, {
+    backgroundColor: "white",
+    borderStyle: "none",
+  });
+
   return cards;
 };
 
