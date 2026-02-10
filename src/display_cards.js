@@ -27,7 +27,7 @@ export const displayCards = (cards) => {
   const hand = boxLines[0].map((_, i) =>
     boxLines.map((box) => box[i]).join(" ")
   ).join("\n");
-  console.log(hand);
-  
+ console.log(hand);
+
   return hand;
 };
