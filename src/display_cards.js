@@ -6,6 +6,7 @@ const symbol = {
   club: "♣️",
   heart: "❤️",
   diamond: "♦️",
+  null : '🃏'
 };
 
 const formatCard = ({ suit, value }) => {
@@ -27,6 +28,17 @@ export const displayCards = (cards) => {
   const hand = boxLines[0].map((_, i) =>
     boxLines.map((box) => box[i]).join(" ")
   ).join("\n");
+<<<<<<< HEAD
   console.log(hand);
+=======
+ console.log(hand);
+
+>>>>>>> da5647e5bdb2b6fef7a7676894216f7951d400e3
   return hand;
 };
+
+export const sortCards = (cards) =>  {
+  const numberCards = cards.filter(card => !isNaN(card.value)).sort((a,b) => a.value - b.value);
+  const faceCards = cards.filter(card => isNaN(card.value)).sort((a,b) => a.value.charCodeAt() - b.value.charCodeAt());
+  return [...numberCards, ...faceCards];
+}

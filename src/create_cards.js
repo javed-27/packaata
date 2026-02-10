@@ -1,3 +1,5 @@
+import { shuffle } from "@std/random";
+
 export const createSet = (suit, color, values) => 
   values.map(value => ({value, suit, color}));
 
@@ -25,3 +27,5 @@ export const createCards = (noOfDecks = 1) => {
 
 export const getSets = (players, cards) => 
   Array.from({length : players}).map(() => cards.splice(0,7));
+
+export const shuffleCards = (cards) =>  shuffle(shuffle(cards));
