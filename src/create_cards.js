@@ -22,3 +22,6 @@ export const createCards = (noOfDecks = 1) => {
   const deck = createDeck(suits, colors, values);
   return Array.from({length : noOfDecks}).flatMap(() => deck);
 }
+
+export const getSets = (players, cards) => 
+  Array.from({length : players}).map(() => cards.splice(0,7));
