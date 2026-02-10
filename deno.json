@@ -4,7 +4,7 @@
     "test": "deno --watch test"
   },
   "imports": {
-    "@std/assert": "jsr:@std/assert@1",
+    "@std/assert": "jsr:@std/assert",
     "@std/testing": "jsr:@std/testing/bdd"
   }
 }
