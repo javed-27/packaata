@@ -5,13 +5,13 @@ const symbol = {
   spade: "♠️",
   club: "♣️",
   heart: "❤️",
-  diamond: "🔶",
+  diamond: "♦️",
 };
 
-const formatCard = ({ color, suit, value }) => {
-  const format = `${value}       ${(symbol[suit])}
-  \n\n\n\n
-${symbol[suit]}       ${value}`;
+const formatCard = ({ suit, value }) => {
+  const format = `${black(value)}       ${(symbol[suit])}
+\n\n\n\n
+${symbol[suit]}       ${black(value)}`;
 
   const cards = boxen(format, {
     backgroundColor: "white",
@@ -26,32 +26,6 @@ export const displayCards = (cards) => {
   const boxLines = formatedCards.map((x) => x.split("\n"));
   const hand = boxLines[0].map((_, i) =>
     boxLines.map((box) => box[i]).join(" ")
-  )
-    .join("\n");
-  console.log(hand);
+  ).join("\n");
+  return hand;
 };
-
-const data = [
-  {
-    color: "black",
-    suit: "spade",
-    value: 1,
-  },
-  {
-    color: "white",
-    suit: "heart",
-    value: 7,
-  },
-  {
-    color: "black",
-    suit: "diamond",
-    value: 3,
-  },
-  {
-    color: "white",
-    suit: "club",
-    value: 7,
-  },
-];
-
-displayCards(data);

@@ -112,6 +112,7 @@
   "workspace": {
     "dependencies": [
       "jsr:@std/assert@*",
+      "jsr:@std/fmt@*",
       "jsr:@std/testing@*"
     ]
   }
