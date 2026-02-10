@@ -1,6 +1,8 @@
 const writeToScreen = (rawData) => {
   const data = (new TextDecoder()).decode(rawData);
-  console.log(data);
+  const result = JSON.parse(data);
+  console.log(result);
+  return result;
 }
 
 const readFromServer = async (connection) => {
@@ -10,8 +12,10 @@ const readFromServer = async (connection) => {
 }
 
 const play = async (connection) => {
-  const data = await readFromServer(connection);
-  writeToScreen(data);
+  while (true) {
+    const data = await readFromServer(connection);
+    writeToScreen(data);
+  }
 }
 
 const main = async () => {
