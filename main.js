@@ -38,13 +38,15 @@ const init = async (players) => {
 }
 
 const startGame = async (players) => {
+  const buffer = new Uint8Array(1024);
   const [sets, joker, openCard, shuffledCards] = await init(players);
   let card = openCard;
   let index = 0;
   while (true) {
-    await writeToPlayer(players[index], openCard);
-    
+    await writeToPlayer(players[index], card);
+    const bytes = await players[index].read(buffer);
     index = (index + 1) % players.length;
+    card = JSON.parse(new TextDecoder().decode(buffer.slice(0, bytes)));
     // players[index].writeToPlayer()
   }
 }
