@@ -28,6 +28,9 @@ const play = async (connection) => {
     displayCards([parse(previousCard)]);
     console.log();
     displayCards(cards);
+    const cardNumber = +prompt('enter the card number');
+    const [droppedCard] = cards.splice(cardNumber - 1, 1);
+    await connection.write(new TextEncoder().encode(JSON.stringify(droppedCard)));
   }
 };
 
