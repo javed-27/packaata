@@ -23,10 +23,6 @@ ${symbol[suit]}${" ".repeat(spaces)}${black(value)}`;
   return cards;
 };
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
 export const displayCards = (cards) => {
   const formatedCards = cards.map(formatCard);
   const boxLines = formatedCards.map((x) => x.split("\n"));
@@ -37,8 +33,6 @@ export const displayCards = (cards) => {
   return hand;
 };
 
->>>>>>> 0f51ad3 (adds dropping cards and transfering to other players)
->>>>>>> 867c77cdeb592bb08add39f5822e3a625dabfe87
 const getDifference = (x, y) => x.value.charCodeAt() - y.value.charCodeAt();
 
 export const sortCards = (cards) => cards.sort((a, b) => getDifference(a, b));
