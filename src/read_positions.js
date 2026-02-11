@@ -1,4 +1,3 @@
-
 const readMouseClick = async(reader) => {
   const {value } = await reader.read();
   const col = value[4] - 32;
@@ -19,12 +18,15 @@ export const readPositions = async() => {
   return [col ,row];
 }
 
-// readPositions()
-
 const selectCards = async() => {
-  const [col, row] = await readPositions();
-  const index = Math.floor(col / 10); 
-  console.log(index);
+  const indexes = []
+  while (true) {
+    const [col, row] = await readPositions();
+    if (row > 37 || row < 1) return indexes;
+    const index = Math.floor(col / 10); 
+    indexes.push(index);
+    console.log(index);
+  }
 }
 
 selectCards()
