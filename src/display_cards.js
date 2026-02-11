@@ -10,17 +10,16 @@ const symbol = {
 };
 
 const formatCard = ({ suit, value }) => {
-  const format = `${black(value)}${
-    " ".repeat(8 - value.length)
-  }${(symbol[suit])}
+  const spaces = 7 - value.length;
+
+  const format = `${black(value)}${" ".repeat(spaces)}${(symbol[suit])}
 \n\n\n\n
-${symbol[suit]}${" ".repeat(8 - value.length)}${black(value)}`;
+${symbol[suit]}${" ".repeat(spaces)}${black(value)}`;
 
   const cards = boxen(format, {
     backgroundColor: "white",
     borderStyle: "none",
   });
-
   return cards;
 };
 
