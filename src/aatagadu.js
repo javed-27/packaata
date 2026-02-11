@@ -1,4 +1,4 @@
-import { displayCards, sortCards } from "./display_cards.js";
+import { displayCards } from "./display_cards.js";
 
 const parse = (rawData) => {
   const data = (new TextDecoder()).decode(rawData);
