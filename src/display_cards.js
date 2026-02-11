@@ -10,9 +10,11 @@ const symbol = {
 };
 
 const formatCard = ({ suit, value }) => {
-  const format = `${black(value)}       ${(symbol[suit])}
+  const format = `${black(value)}${
+    " ".repeat(8 - value.length)
+  }${(symbol[suit])}
 \n\n\n\n
-${symbol[suit]}       ${black(value)}`;
+${symbol[suit]}${" ".repeat(8 - value.length)}${black(value)}`;
 
   const cards = boxen(format, {
     backgroundColor: "white",
@@ -24,7 +26,7 @@ ${symbol[suit]}       ${black(value)}`;
 
 const getDifference = (x, y) => x.value.charCodeAt() - y.value.charCodeAt();
 
-const sortCards = (cards) => cards.sort((a, b) => getDifference(a, b));
+export const sortCards = (cards) => cards.sort((a, b) => getDifference(a, b));
 
 export const displayCards = (cards) => {
   const formatedCards = sortCards(cards).map(formatCard);
@@ -32,6 +34,6 @@ export const displayCards = (cards) => {
   const hand = boxLines[0].map((_, i) =>
     boxLines.map((box) => box[i]).join(" ")
   ).join("\n");
-  console.log(sortCards(hand));
+  console.log(hand);
   return hand;
 };
