@@ -22,8 +22,7 @@ const play = async (connection) => {
   writeToScreen(msg);
   const data = await readFromServer(connection);
   const cards = parse(data);
-  const sortedCards = sortCards(cards);
-  displayCards(sortedCards);
+  displayCards(cards);
   while (true) {
   }
 };
