@@ -7,7 +7,8 @@
     "jsr:@std/internal@^1.0.12": "1.0.12",
     "jsr:@std/random@~0.1.5": "0.1.5",
     "jsr:@std/testing@*": "1.0.17",
-    "npm:boxen@*": "8.0.1"
+    "npm:boxen@*": "8.0.1",
+    "npm:playing-cards@*": "1.1.0"
   },
   "jsr": {
     "@std/assert@1.0.18": {
@@ -82,6 +83,9 @@
     },
     "is-fullwidth-code-point@3.0.0": {
       "integrity": "sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg=="
+    },
+    "playing-cards@1.1.0": {
+      "integrity": "sha512-AKb1FqLbsZNHzh0AnkiQC1lo5v4z24MI2J25e9m3ESDa4d98u6Z0jYc/cc9/Fs0w1t5w5YGwG68wzmptZxnW4g=="
     },
     "string-width@4.2.3": {
       "integrity": "sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==",

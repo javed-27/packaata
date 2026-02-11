@@ -23,19 +23,6 @@ ${symbol[suit]}${" ".repeat(spaces)}${black(value)}`;
   return cards;
 };
 
-<<<<<<< HEAD
-=======
-export const displayCards = (cards) => {
-  const formatedCards = cards.map(formatCard);
-  const boxLines = formatedCards.map((x) => x.split("\n"));
-  const hand = boxLines[0].map((_, i) =>
-    boxLines.map((box) => box[i]).join(" ")
-  ).join("\n");
-  console.log(hand);
-  return hand;
-};
-
->>>>>>> 6336b93 (something)
 const getDifference = (x, y) => x.value.charCodeAt() - y.value.charCodeAt();
 
 export const sortCards = (cards) => cards.sort((a, b) => getDifference(a, b));
