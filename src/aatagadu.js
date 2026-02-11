@@ -22,8 +22,12 @@ const play = async (connection) => {
   writeToScreen(msg);
   const data = await readFromServer(connection);
   const cards = parse(data);
-  displayCards(cards);
+  connection.write(new TextEncoder().encode("ok"));
   while (true) {
+    const previousCard = await readFromServer(connection);
+    displayCards([parse(previousCard)]);
+    console.log();
+    displayCards(cards);
   }
 };
 
