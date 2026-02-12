@@ -29,6 +29,7 @@ export const removeTheIndex = (numbers, num) => {
 }
 
 const handleTheIndex = (indexes, index, cards) => {
+  if (index >= cards.lenght) return;
   if (indexes.includes(index)) {
    return removeTheIndex(indexes, index);
   }
@@ -37,14 +38,14 @@ const handleTheIndex = (indexes, index, cards) => {
     indexes.push(index);
 }
 
-export const selectCards = async(cards) => {
+export const selectCards = async(cards, previousCard, joker) => {
   const indexes = []
   while (true) {
     const [col, row] = await readPositions();
-    if ([25,26].includes(row) && [100,101].includes(col)) return indexes;
-    const index = Math.floor(col / 10); 
+    if ([20,21].includes(row) && (col < 122 && col > 110)) return indexes;
+    const index = Math.floor(col / 10);
     handleTheIndex(indexes, index, cards);
     console.log(indexes);
-    upCards(cards, indexes);
+    upCards(cards, indexes, previousCard, joker);
   }
 }
