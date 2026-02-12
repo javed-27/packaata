@@ -18,13 +18,27 @@ export const readPositions = async() => {
   return [col ,row];
 }
 
-const selectCards = async() => {
+export const removeTheIndex = (numbers, num) => {
+  const index = numbers.findIndex(x => x=== num);
+  numbers.splice(index, 1);
+}
+
+const handleTheIndex = (indexes, index, cards) => {
+  if (indexes.includes(index)) {
+   return removeTheIndex(indexes, index);
+  }
+  const lenght = indexes.filter((i) => cards[i].value === cards[index].value ).length;
+  if (indexes.length === lenght)
+    indexes.push(index);
+}
+
+const selectCards = async(cards) => {
   const indexes = []
   while (true) {
     const [col, row] = await readPositions();
-    if (row > 30 || row < 1) return indexes;
+    if ([25,26].includes(row) && [100,101].includes(col)) return indexes;
     const index = Math.floor(col / 10); 
-    indexes.push(index + 1);
+    handleTheIndex(indexes, index, cards);
   }
 }
 
