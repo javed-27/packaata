@@ -16,11 +16,15 @@ export const readPositions = async () => {
   const reader = Deno.stdin.readable.getReader();
   const writer = Deno.stdout.writable.getWriter();
   const encoder = new TextEncoder();
+  console.log('1');
+  
   await writer.write(encoder.encode("\x1b[?1000h"));
   const [col, row] = await readMouseClick(reader);
   await writer.write(encoder.encode("\x1b[?1000l"));
   writer.releaseLock();
   reader.releaseLock();
+  console.log('2');
+
   return [col, row];
 };
 

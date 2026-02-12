@@ -1,4 +1,5 @@
-import { getCards } from "./display_cards.js";
+import { getCards, userUI } from "./display_cards.js";
+import { selectCards } from "./read_positions.js";
 
 const parse = (rawData) => {
   const data = (new TextDecoder()).decode(rawData);
@@ -21,14 +22,16 @@ const play = async (connection) => {
   const msg = await readFromServer(connection);
   writeToScreen(msg);
   const data = await readFromServer(connection);
-  const cards = parse(data);
+  console.log(parse(data));
+  const {cards, joker} = parse(data);
   connection.write(new TextEncoder().encode("ok"));
+
   while (true) {
-    const previousCard = await readFromServer(connection);
-    getCards([parse(previousCard)]);
-    console.log();
-    getCards(cards);
-    const cardNumber = +prompt("enter the card number");
+    const previousCard = parse(await readFromServer(connection));
+    const hand = getCards(cards);
+    userUI({ hand, openCard: previousCard, joker });
+    prompt('');
+    const cardNumber = await selectCards(cards, previousCard, joker)[0];
     const [droppedCard] = cards.splice(cardNumber - 1, 1);
     await connection.write(
       new TextEncoder().encode(JSON.stringify(droppedCard)),
