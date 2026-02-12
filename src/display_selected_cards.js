@@ -5,13 +5,13 @@ const combineSpaces = (data, positions, i) => {
   return " ".repeat(9) + "\n" + data;
 };
 
-export const upCards = (cards, positions ,openCard, joker) => {
+export const upAndDownCards = (cards, positions, openCard, joker) => {
   const formatedCards = cards.map(formatCard);
   const spaceAddedCards = [];
   for (let i = 0; i < formatedCards.length; i++) {
     spaceAddedCards[i] = combineSpaces(formatedCards[i], positions, i);
   }
 
-  const obj = {joker, openCard, hand : spaceAddedCards};
+  const obj = { joker, openCard, hand: spaceAddedCards };
   userUI(obj);
 };
