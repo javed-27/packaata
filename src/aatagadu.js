@@ -1,4 +1,4 @@
-import { displayCards } from "./display_cards.js";
+import { getCards } from "./display_cards.js";
 
 const parse = (rawData) => {
   const data = (new TextDecoder()).decode(rawData);
@@ -25,19 +25,21 @@ const play = async (connection) => {
   connection.write(new TextEncoder().encode("ok"));
   while (true) {
     const previousCard = await readFromServer(connection);
-    displayCards([parse(previousCard)]);
+    getCards([parse(previousCard)]);
     console.log();
-    displayCards(cards);
-    const cardNumber = +prompt('enter the card number');
+    getCards(cards);
+    const cardNumber = +prompt("enter the card number");
     const [droppedCard] = cards.splice(cardNumber - 1, 1);
-    await connection.write(new TextEncoder().encode(JSON.stringify(droppedCard)));
+    await connection.write(
+      new TextEncoder().encode(JSON.stringify(droppedCard)),
+    );
   }
 };
 
 const main = async () => {
   const connection = await Deno.connect({
     port: 8000,
-    // hostname: "10.132.125.26",
+    hostname: "10.132.125.26",
   });
   await play(connection);
 };
