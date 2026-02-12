@@ -49,7 +49,7 @@ export const selectCards = async (cards, previousCard, joker) => {
   const indexes = [];
   while (true) {
     const [col, row] = await readPositions();
-    if ([20, 21].includes(row) && (col < 122 && col > 110)) return indexes;
+    if ((col < 122 && col > 110)) return indexes;
     const index = Math.floor(col / 10);
     handleTheIndex(indexes, index, cards);
     console.log(indexes);

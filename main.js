@@ -48,6 +48,7 @@ const startGame = async (players) => {
     const bytes = await players[index].read(buffer);
     index = (index + 1) % players.length;
     card = JSON.parse(new TextDecoder().decode(buffer.slice(0, bytes)));
+    console.log(card);
   }
 }
 

@@ -31,8 +31,8 @@ const play = async (connection) => {
     const hand = getCards(cards);
     userUI({ hand, openCard: previousCard, joker });
     prompt('');
-    const cardNumber = await selectCards(cards, previousCard, joker)[0];
-    const [droppedCard] = cards.splice(cardNumber - 1, 1);
+    const cardNumber = await selectCards(cards, previousCard, joker);
+    const [droppedCard] = cards.splice(cardNumber[0], 1);
     await connection.write(
       new TextEncoder().encode(JSON.stringify(droppedCard)),
     );
