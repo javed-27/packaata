@@ -1,8 +1,13 @@
+import { upCards } from "./display_selected_cards.js";
+
 const readMouseClick = async(reader) => {
-  const {value } = await reader.read();
-  const col = value[4] - 32;
-  const row = value[5] - 32;
-  return [col, row];
+  while (true) {
+    const {value } = await reader.read();
+    const col = value[4] - 32;
+    const row = value[5] - 32;
+    if (value[3]=== 35)
+    return [col, row];
+  }
 }
 
 export const readPositions = async() => {
@@ -32,14 +37,14 @@ const handleTheIndex = (indexes, index, cards) => {
     indexes.push(index);
 }
 
-const selectCards = async(cards) => {
+export const selectCards = async(cards) => {
   const indexes = []
   while (true) {
     const [col, row] = await readPositions();
     if ([25,26].includes(row) && [100,101].includes(col)) return indexes;
     const index = Math.floor(col / 10); 
     handleTheIndex(indexes, index, cards);
+    console.log(indexes);
+    upCards(cards, indexes);
   }
 }
-
-selectCards()

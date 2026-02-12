@@ -1,19 +1,17 @@
-//  const upCards = (cards, positions = [1]) => {
-//   const hand = [];
-//   let a = Array.from({length : cards.length}, () => ' '.repeat(10));
-//   for (let i = 0; i < cards.length; i++) {
-//     if (positions.includes(i)) {
-//       a[i] = (formatCard(cards[i]));
-//     }
-//   }
-//   hand.push(a);
-//    a = Array.from({length : cards.length}, () => ' '.repeat(10));
-//   for (let i = 0; i < cards.length; i++) {
-//     if (!positions.includes(i)) {
-//       a[i] = (formatCard(cards[i]));
-//     }
-//   }
-//   hand.push(a);
-//   console.clear();
-//   console.log(hand);
-// }
+import { formatCard, getHand } from "./display_cards.js";
+
+const combineSpaces = (data, positions, i) => {
+  if (positions.includes(i)) return data + "\n" + " ".repeat(9);
+  return " ".repeat(9) + "\n" + data;
+};
+
+export const upCards = (cards, positions = [1]) => {
+  const formatedCards = cards.map(formatCard);
+  const spaceAddedCards = [];
+  for (let i = 0; i < formatedCards.length; i++) {
+    spaceAddedCards[i] = combineSpaces(formatedCards[i], positions, i);
+  }
+  const hand = getHand(spaceAddedCards);
+  console.clear();
+  console.log(hand);
+};
