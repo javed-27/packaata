@@ -16,14 +16,12 @@ export const readPositions = async () => {
   const reader = Deno.stdin.readable.getReader();
   const writer = Deno.stdout.writable.getWriter();
   const encoder = new TextEncoder();
-  console.log('1');
   
   await writer.write(encoder.encode("\x1b[?1000h"));
   const [col, row] = await readMouseClick(reader);
   await writer.write(encoder.encode("\x1b[?1000l"));
   writer.releaseLock();
   reader.releaseLock();
-  console.log('2');
 
   return [col, row];
 };
@@ -52,7 +50,6 @@ export const selectCards = async (cards, previousCard, joker) => {
     if ((col < 122 && col > 110)) return indexes;
     const index = Math.floor(col / 10);
     handleTheIndex(indexes, index, cards);
-    console.log(indexes);
     upAndDownCards(cards, indexes, previousCard, joker);
   }
 };
