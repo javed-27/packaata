@@ -23,14 +23,14 @@ const play = async (connection) => {
   writeToScreen(msg);
   const data = await readFromServer(connection);
   console.log(parse(data));
-  const {cards, joker} = parse(data);
+  const { cards, joker } = parse(data);
   connection.write(new TextEncoder().encode("ok"));
 
   while (true) {
     const previousCard = parse(await readFromServer(connection));
     const hand = getCards(cards);
     userUI({ hand, openCard: previousCard, joker });
-    prompt('');
+    prompt("");
     const cardNumber = await selectCards(cards, previousCard, joker);
     const [droppedCard] = cards.splice(cardNumber[0], 1);
     await connection.write(
