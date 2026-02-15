@@ -21,7 +21,6 @@ const getPlayers = async (listener, count) => {
 const writeSetsToPlayer = async (sets, joker, players) => {
   const buffer = new Uint8Array(1024);
   for (let index = 0; index < sets.length; index++) {
-    console.log(sets[index]);
     await writeToPlayer(players[index], {cards:sets[index], joker});
     await players[index].read(buffer);
   }
@@ -30,25 +29,39 @@ const writeSetsToPlayer = async (sets, joker, players) => {
 
 const init = async (players) => {
   const cards = createCards();
-  const shuffledCards = shuffleCards(cards);
-  const joker = shuffledCards.shift();
-  const openCard = shuffledCards.shift();
-  const sets = getSets(players.length, shuffledCards);
+  const deck = shuffleCards(cards);
+  const joker = deck.shift();
+  const openCard = deck.shift();
+  const sets = getSets(players.length, deck);
   await writeSetsToPlayer(sets, joker, players);
-  return [sets, openCard, shuffledCards];
+  return [openCard, deck];
 }
 
 const startGame = async (players) => {
+  const decoder = new TextDecoder();
   const buffer = new Uint8Array(1024);
-  const [sets, openCard, shuffledCards] = await init(players);
+  const [openCard, deck] = await init(players);
+  const remainingDeck = [];
   let card = openCard;
   let index = 0;
   while (true) {
-    await writeToPlayer(players[index], card);
+    await writeToPlayer(players[index], card); // writing the open card
     const bytes = await players[index].read(buffer);
+    
+    const cards = JSON.parse(decoder.decode(buffer.slice(0, bytes)));
+    if (cards[0].value !== card.value && cards.length < 3) {
+      const bytes = await players[index].read(buffer);
+      const cardType = JSON.parse(decoder.decode(buffer.slice(0, bytes))).cardType;
+      const data = cardType === 'previous' ? card : deck.shift();
+      if (cardType === 'deck') remainingDeck.push(card);
+      await writeToPlayer(players[index], data);
+    }
+    card = cards[0];
+    remainingDeck.concat(cards.slice(1));
+    if (deck.length === 1) {
+      deck.concat(shuffleCards(remainingDeck));
+    }
     index = (index + 1) % players.length;
-    card = JSON.parse(new TextDecoder().decode(buffer.slice(0, bytes)));
-    console.log(card);
   }
 }
 
