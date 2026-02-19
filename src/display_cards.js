@@ -59,8 +59,7 @@ export const getCards = (cards) => {
   return formatedCards;
 };
 
-const getReleaseButton = () => {
-  const msg = "release\ncards";
+const createButton = (msg) => {
   const button = boxen(msg, {
     backgroundColor: "red",
     padding: 0.8,
@@ -74,11 +73,10 @@ export const userUI = (userData) => {
   const deck = createDeckUi(userData.joker);
   const openCard = formatCard(userData.openCard);
   const hand = getHand(userData.hand);
-  console.clear();
   const formatedDeck = `\n\n\t\t\t\t\t\t${
     deck.split("\n").join("\n\t\t\t\t\t\t")
   }`;
-  const release = getReleaseButton();
+  const release = createButton("release\ncards");
 
   const formatedOpenCard = `\n  open card\n  ${
     openCard.split("\n").join("\n  ")
@@ -89,5 +87,6 @@ export const userUI = (userData) => {
 
   const formatedHand = `\n\n\n\n${hand}`;
   const screen = formatedDeck + formatedOpenCard + releaseButton + formatedHand;
+  console.clear();
   console.log(screen);
 };
