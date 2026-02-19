@@ -47,9 +47,19 @@ export const selectCards = async (cards, previousCard, joker) => {
   const indexes = [];
   while (true) {
     const [col, row] = await readPositions();
+    if ((col < 102 && col > 90)) return 'show';
     if ((col < 122 && col > 110)) return indexes;
     const index = Math.floor(col / 10);
     handleTheIndex(indexes, index, cards);
     upAndDownCards(cards, indexes, previousCard, joker);
   }
 };
+
+export const getTheoption = async() => {
+  while (true) {
+    const [col, row] = await readPositions();
+    if ((col > 2 && col < 12) && (row > 12 && row < 19)) return 'previous';
+    if ((col > 48 && col < 71) && (row > 2 && row < 12)) return 'deck';
+    console.log(col ,row);
+  }
+}

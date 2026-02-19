@@ -1,5 +1,5 @@
 import { getCards, userUI } from "./display_cards.js";
-import { selectCards } from "./read_positions.js";
+import { getTheoption, selectCards } from "./read_positions.js";
 import { select } from "npm:@inquirer/prompts";
 
 const parse = (rawData) => {
@@ -25,29 +25,13 @@ const dropCards = (cards, cardNumbers) => {
 };
 
 const takeACard = async (connection) => {
-  const option = await select({
-    message: "Select an option",
-    choices: [
-      { name: "take the previous card", value: "previous" },
-      { name: "take the card from deck", value: "deck" },
-    ],
-  });
+  console.log('Take a card from the deck or the previous card');
+  const option = await getTheoption();
   await connection.write(
     new TextEncoder().encode(JSON.stringify({ cardType: option })),
   );
   const newCard = parse(await readFromServer(connection));
   return newCard;
-};
-
-const getDecision = async () => {
-  const option = await select({
-    message: "select an option",
-    choices: [
-      { name: "show", value: "show" },
-      { name: "continue playing", value: "play" },
-    ],
-  });
-  return option;
 };
 
 const play = async (connection) => {
@@ -65,9 +49,14 @@ const play = async (connection) => {
     const hand = getCards(cards);
     userUI({ hand, openCard: previousCard, joker });
     console.log("select the cards and click release");
-    const decision = await getDecision();
-    if (decision === "play") {
       const cardNumbers = await selectCards(cards, previousCard, joker);
+
+      if (cardNumbers === "show") {
+      await connection.write(
+        new TextEncoder().encode(JSON.stringify('show')),
+      );
+      continue;
+    } 
 
       const droppedCards = dropCards(cards, cardNumbers);
       userUI({ hand: getCards(cards), openCard: previousCard, joker });
@@ -82,12 +71,7 @@ const play = async (connection) => {
         const hand = getCards(cards);
         userUI({ hand, openCard: previousCard, joker });
       }
-    }
-    if (decision === "show") {
-      await connection.write(
-        new TextEncoder().encode(JSON.stringify('show')),
-      );
-    } 
+    
   }
   connection.write(new TextEncoder().encode(JSON.stringify(cards)));
   const result = parse(await readFromServer(connection));

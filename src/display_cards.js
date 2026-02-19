@@ -76,17 +76,22 @@ export const userUI = (userData) => {
   const formatedDeck = `\n\n\t\t\t\t\t\t${
     deck.split("\n").join("\n\t\t\t\t\t\t")
   }`;
+  const show = createButton("show\ncards");
   const release = createButton("release\ncards");
 
   const formatedOpenCard = `\n  open card\n  ${
     openCard.split("\n").join("\n  ")
   } \n`;
-  const releaseButton = `${" ".repeat(110)}${
+  const showButton = `${" ".repeat(90)}${
+    show.split("\n").join("\n" + " ".repeat(90))
+  }\n`;
+
+    const releaseButton = `${" ".repeat(110)}${
     release.split("\n").join("\n" + " ".repeat(110))
   }\n`;
 
   const formatedHand = `\n\n\n\n${hand}`;
-  const screen = formatedDeck + formatedOpenCard + releaseButton + formatedHand;
+  const screen = formatedDeck + formatedOpenCard + showButton + releaseButton+ formatedHand;
   console.clear();
   console.log(screen);
 };
