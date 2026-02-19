@@ -43,10 +43,6 @@ const play = async (connection) => {
   const msg = await readFromServer(connection);
   writeToScreen(msg);
   const data = await readFromServer(connection);
-<<<<<<< HEAD
-  console.log(parse(data));
-=======
->>>>>>> ed085c7322716408a9d5e38c0b5df9f5b3d0ab74
   const { cards, joker } = parse(data);
   connection.write(new TextEncoder().encode("ok"));
 
@@ -54,17 +50,11 @@ const play = async (connection) => {
     const previousCard = parse(await readFromServer(connection));
     const hand = getCards(cards);
     userUI({ hand, openCard: previousCard, joker });
-<<<<<<< HEAD
-    prompt("");
-    const cardNumber = await selectCards(cards, previousCard, joker);
-    const [droppedCard] = cards.splice(cardNumber[0], 1);
-=======
     console.log("select the cards and click release");
     const cardNumbers = await selectCards(cards, previousCard, joker);
 
     const droppedCards = dropCards(cards, cardNumbers);
     userUI({ hand:getCards(cards), openCard: previousCard, joker });
->>>>>>> ed085c7322716408a9d5e38c0b5df9f5b3d0ab74
     await connection.write(
       new TextEncoder().encode(JSON.stringify(droppedCards)),
     );
