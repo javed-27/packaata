@@ -37,6 +37,20 @@ const init = async (players) => {
   return [openCard, deck];
 }
 
+const getCards = async (players) => {
+  const buffer = new Uint8Array(1024);
+  const sets = [];
+  for (const player of players) {
+    await writeToPlayer(player, 'show');
+    const bytes = await player.read(buffer);
+    const cards = JSON.parse(new TextDecoder().decode(buffer.slice(0, bytes)));
+    sets.push(cards);
+  }
+  return sets;
+}
+
+const calculatePoints = (sets) => 'haji won the game';
+
 const startGame = async (players) => {
   const decoder = new TextDecoder();
   const buffer = new Uint8Array(1024);
@@ -45,24 +59,35 @@ const startGame = async (players) => {
   let card = openCard;
   let index = 0;
   while (true) {
-    await writeToPlayer(players[index], card); // writing the open card
+    await writeToPlayer(players[index], card);// writing the open card
     const bytes = await players[index].read(buffer);
     
     const cards = JSON.parse(decoder.decode(buffer.slice(0, bytes)));
-    if (cards[0].value !== card.value && cards.length < 3) {
-      const bytes = await players[index].read(buffer);
-      const cardType = JSON.parse(decoder.decode(buffer.slice(0, bytes))).cardType;
-      const data = cardType === 'previous' ? card : deck.shift();
-      if (cardType === 'deck') remainingDeck.push(card);
-      await writeToPlayer(players[index], data);
+    if (cards !== 'show') {
+      if (cards[0].value !== card.value && cards.length < 3) {
+        const bytes = await players[index].read(buffer);
+        const cardType = JSON.parse(decoder.decode(buffer.slice(0, bytes))).cardType;
+        const data = cardType === 'previous' ? card : deck.shift();
+        if (cardType === 'deck') remainingDeck.push(card);
+        await writeToPlayer(players[index], data);
+      }
+      card = cards[0];
+      remainingDeck.concat(cards.slice(1));
+      if (deck.length === 1) {
+        deck.concat(shuffleCards(remainingDeck));
+      }
+      index = (index + 1) % players.length;
     }
-    card = cards[0];
-    remainingDeck.concat(cards.slice(1));
-    if (deck.length === 1) {
-      deck.concat(shuffleCards(remainingDeck));
+    if (cards === 'show') {
+      break;
     }
-    index = (index + 1) % players.length;
   }
+  const sets = await getCards(players);
+  const result = calculatePoints(sets);
+  for (const player of players) {
+    await writeToPlayer(player, result);
+  }
+  return;
 }
 
 const main = async () => {

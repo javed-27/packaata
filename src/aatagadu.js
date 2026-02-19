@@ -39,6 +39,17 @@ const takeACard = async (connection) => {
   return newCard;
 };
 
+const getDecision = async () => {
+  const option = await select({
+    message: "select an option",
+    choices: [
+      { name: "show", value: "show" },
+      { name: "continue playing", value: "play" },
+    ],
+  });
+  return option;
+};
+
 const play = async (connection) => {
   const msg = await readFromServer(connection);
   writeToScreen(msg);
@@ -48,25 +59,40 @@ const play = async (connection) => {
 
   while (true) {
     const previousCard = parse(await readFromServer(connection));
+    if (previousCard === 'show') {
+      break;
+    }
     const hand = getCards(cards);
     userUI({ hand, openCard: previousCard, joker });
     console.log("select the cards and click release");
-    const cardNumbers = await selectCards(cards, previousCard, joker);
+    const decision = await getDecision();
+    if (decision === "play") {
+      const cardNumbers = await selectCards(cards, previousCard, joker);
 
-    const droppedCards = dropCards(cards, cardNumbers);
-    userUI({ hand:getCards(cards), openCard: previousCard, joker });
-    await connection.write(
-      new TextEncoder().encode(JSON.stringify(droppedCards)),
-    );
-    if (
-      droppedCards[0].value !== previousCard.value && droppedCards.length < 3
-    ) {
-      const card = await takeACard(connection);
-      cards.push(card); // either from deck or the previous card
-      const hand = getCards(cards);
-      userUI({ hand, openCard: previousCard, joker });
+      const droppedCards = dropCards(cards, cardNumbers);
+      userUI({ hand: getCards(cards), openCard: previousCard, joker });
+      await connection.write(
+        new TextEncoder().encode(JSON.stringify(droppedCards)),
+      );
+      if (
+        droppedCards[0].value !== previousCard.value && droppedCards.length < 3
+      ) {
+        const card = await takeACard(connection);
+        cards.push(card); // either from deck or the previous card
+        const hand = getCards(cards);
+        userUI({ hand, openCard: previousCard, joker });
+      }
     }
+    if (decision === "show") {
+      await connection.write(
+        new TextEncoder().encode(JSON.stringify('show')),
+      );
+    } 
   }
+  connection.write(new TextEncoder().encode(JSON.stringify(cards)));
+  const result = parse(await readFromServer(connection));
+  console.clear();
+  console.log(result);
 };
 
 const main = async () => {
